@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Học Tập Môn Công Nghệ 6 - Cô Ngân Hà</title>
+    
+    <!-- Thư viện liên kết -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font chữ -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Cấu hình chung & Màu sắc Pastel --- */
+        :root {
+            --text-dark: #5d5d5d;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: background-color 1s ease;
+            animation: pastel-cycle 30s infinite alternate;
+        }
+
+        @keyframes pastel-cycle {
+            0% { background-color: #fff0f5; }   /* Lavender Blush */
+            20% { background-color: #e0f7fa; }   /* Cyan tint */
+            40% { background-color: #f1f8e9; }   /* Light Green tint */
+            60% { background-color: #fff8e1; }   /* Amber tint */
+            80% { background-color: #f3e5f5; }   /* Purple tint */
+            100% { background-color: #fff0f5; }
+        }
+
+        .btn-3d {
+            transition: all 0.1s;
+            box-shadow: 0px 5px 0px 0px rgba(0,0,0,0.1);
+            transform: translateY(0);
+        }
+
+        .btn-3d:active {
+            transform: translateY(5px);
+            box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.1);
+        }
+
+        .floating-icon {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .title-animate {
+            font-family: 'Dancing Script', cursive;
+            animation: colorChange 8s infinite linear;
+        }
+
+        @keyframes colorChange {
+            0% { color: #ff9a9e; } 25% { color: #a18cd1; } 50% { color: #fad0c4; } 75% { color: #84fab0; } 100% { color: #ff9a9e; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fff; }
+        ::-webkit-scrollbar-thumb { background: #ffb7b2; border-radius: 4px; }
+
+        .hidden-section { display: none; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 2px solid white;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(255, 183, 178, 0.2);
+        }
+
+        .marquee-footer {
+            background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
+            color: #d63384;
+            font-weight: bold;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 50;
+        }
+
+        .student-card-deco { position: relative; overflow: hidden; }
+        .student-card-deco::before {
+            content: ''; position: absolute; top: -20px; right: -20px;
+            width: 100px; height: 100px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%; z-index: 1;
+        }
+        
+        .student-name-fancy {
+            font-family: 'Dancing Script', cursive;
+            color: #ef4444; /* red-500 */
+            text-shadow: 2px 2px 0px rgba(255, 200, 200, 0.5);
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- BACKGROUND ICONS -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <i class="fas fa-atom floating-icon text-blue-300 text-6xl" style="top: 10%; left: 5%; animation-duration: 7s;"></i>
+        <i class="fas fa-dna floating-icon text-pink-300 text-5xl" style="top: 20%; right: 10%; animation-duration: 8s;"></i>
+        <i class="fas fa-microchip floating-icon text-green-300 text-4xl" style="bottom: 20%; left: 15%; animation-duration: 6s;"></i>
+        <i class="fas fa-flask floating-icon text-yellow-300 text-5xl" style="bottom: 15%; right: 20%; animation-duration: 9s;"></i>
+        <i class="fas fa-leaf floating-icon text-green-400 text-3xl" style="top: 50%; left: 50%; animation-duration: 10s;"></i>
+    </div>
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b-4 border-pink-200">
+        <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center relative z-10">
+            <div class="flex items-center gap-3">
+                <div class="bg-pink-100 p-2 rounded-full">
+                    <i class="fas fa-seedling text-2xl text-pink-500"></i>
+                </div>
+                <h1 class="text-xl font-bold text-gray-600 hidden md:block" style="font-family: 'Pacifico', cursive;">Công Nghệ 6</h1>
+            </div>
+            
+            <nav class="flex gap-2 flex-wrap justify-end">
+                <button onclick="switchView('home-view')" class="btn-3d bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-1 px-3 md:py-2 md:px-4 rounded-xl border-b-4 border-blue-200 text-sm">
+                    <i class="fas fa-home mr-1"></i> Home
+                </button>
+                <button onclick="switchView('teacher-login')" class="btn-3d bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-1 px-3 md:py-2 md:px-4 rounded-xl border-b-4 border-pink-200 text-sm">
+                    <i class="fas fa-chalkboard-teacher mr-1"></i> GV
+                </button>
+                <button onclick="switchView('leader-login')" class="btn-3d bg-green-100 hover:bg-green-200 text-green-700 font-bold py-1 px-3 md:py-2 md:px-4 rounded-xl border-b-4 border-green-200 text-sm">
+                    <i class="fas fa-users-cog mr-1"></i> Nhóm trưởng
+                </button>
+                <button onclick="switchView('student-login')" class="btn-3d bg-yellow-100 hover:bg-yellow-200 text-yellow-700 font-bold py-1 px-3 md:py-2 md:px-4 rounded-xl border-b-4 border-yellow-200 text-sm">
+                    <i class="fas fa-user-graduate mr-1"></i> HS
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow container mx-auto px-4 py-8 mb-12 relative z-10">
+        
+        <!-- 1. HOME VIEW -->
+        <section id="home-view" class="text-center relative py-10">
+            <div class="glass-panel p-10 max-w-4xl mx-auto transform hover:scale-[1.02] transition duration-500 border-white/50">
+                <h1 class="text-4xl md:text-6xl mb-6 title-animate drop-shadow-sm leading-tight">
+                    Chương trình theo dõi quá trình học tập<br>môn Công nghệ
+                </h1>
+                
+                <div class="bg-white/60 p-6 rounded-2xl border border-pink-100 shadow-sm mx-auto max-w-2xl">
+                    <p class="text-blue-900 italic text-sm md:text-base leading-relaxed">
+                        “Chương trình Hồ sơ học tập môn Công nghệ nhằm theo dõi toàn bộ quá trình học tập của mỗi học sinh qua mỗi bài học. Bằng cách tích luỹ đánh giá thường xuyên qua mỗi bài học, giúp giáo viên tổng hợp kết quả cuối mỗi kì, từ đó theo dõi được toàn bộ quá trình phát triển năng lực của học sinh trong môn học”
+                    </p>
+                </div>
+
+                <!-- Clock & Greeting -->
+                <div class="mt-8 inline-block bg-white/90 px-8 py-3 rounded-full shadow-lg border-2 border-pink-200">
+                    <div id="clock" class="text-2xl font-bold text-pink-500 font-mono">00:00</div>
+                    <div id="greeting" class="text-sm text-gray-500 font-bold mt-1">Xin chào!</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. TEACHER LOGIN -->
+        <section id="teacher-login" class="hidden-section max-w-md mx-auto mt-10">
+            <div class="glass-panel p-8 text-center">
+                <div class="w-20 h-20 bg-pink-100 rounded-full mx-auto flex items-center justify-center mb-4 text-3xl text-pink-500 shadow-inner">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-700 mb-6">Giáo Viên Đăng Nhập</h2>
+                <input type="password" id="teacher-password" placeholder="Nhập mật khẩu (123456)" class="w-full p-3 rounded-lg border-2 border-pink-200 mb-4 focus:outline-none focus:border-pink-400 bg-white/50">
+                <button onclick="loginTeacher()" class="w-full btn-3d bg-green-300 text-green-900 font-bold py-3 rounded-xl border-b-4 border-green-400">
+                    Truy Cập Hệ Thống
+                </button>
+            </div>
+        </section>
+
+        <!-- 2b. LEADER LOGIN -->
+        <section id="leader-login" class="hidden-section max-w-md mx-auto mt-10">
+            <div class="glass-panel p-8 text-center">
+                <div class="w-20 h-20 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-4 text-3xl text-green-500 shadow-inner">
+                    <i class="fas fa-users-cog"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-700 mb-2">Nhóm Trưởng Đăng Nhập</h2>
+                <p class="text-sm text-gray-500 mb-4">Dành cho HS hỗ trợ GV nhập điểm</p>
+                <input type="password" id="leader-password" placeholder="Nhập mật khẩu (123456)" class="w-full p-3 rounded-lg border-2 border-green-200 mb-4 focus:outline-none focus:border-green-400 bg-white/50">
+                <button onclick="loginLeader()" class="w-full btn-3d bg-blue-300 text-blue-900 font-bold py-3 rounded-xl border-b-4 border-blue-400">
+                    Bắt Đầu Làm Việc
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. TEACHER DASHBOARD -->
+        <section id="teacher-dashboard" class="hidden-section">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Sidebar -->
+                <div class="md:col-span-1 space-y-4">
+                    <div class="glass-panel p-4">
+                        <h3 class="font-bold text-gray-600 mb-4 text-center uppercase tracking-wide text-sm">Menu Quản Lý</h3>
+                        <button onclick="showTeacherTab('classes')" class="w-full text-left p-3 rounded-lg hover:bg-pink-100 font-bold text-gray-600 transition flex items-center"><i class="fas fa-users w-8 text-pink-400"></i> Lớp học</button>
+                        <button onclick="showTeacherTab('tracking')" class="w-full text-left p-3 rounded-lg hover:bg-blue-100 font-bold text-gray-600 transition flex items-center"><i class="fas fa-tasks w-8 text-blue-400"></i> Theo dõi</button>
+                        <button onclick="showTeacherTab('notify')" class="w-full text-left p-3 rounded-lg hover:bg-yellow-100 font-bold text-gray-600 transition flex items-center"><i class="fas fa-bullhorn w-8 text-yellow-400"></i> Thông báo</button>
+                        <button onclick="showTeacherTab('stats')" class="w-full text-left p-3 rounded-lg hover:bg-green-100 font-bold text-gray-600 transition flex items-center"><i class="fas fa-chart-pie w-8 text-green-400"></i> Thống kê</button>
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div class="md:col-span-3">
+                    <div class="glass-panel p-6 min-h-[500px] bg-white/60">
+                        
+                        <!-- TAB: Classes -->
+                        <div id="tab-classes" class="teacher-tab">
+                            <h2 class="text-2xl font-bold text-pink-600 mb-6 border-b-2 border-pink-200 pb-2">Danh sách Lớp Học</h2>
+                            <div id="class-grid" class="grid grid-cols-2 md:grid-cols-3 gap-6"></div>
+                            <div id="student-list-container" class="hidden mt-6">
+                                <button onclick="closeStudentList()" class="mb-4 text-sm bg-white border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-100 shadow-sm"><i class="fas fa-arrow-left"></i> Quay lại</button>
+                                <h3 id="current-class-title" class="text-xl font-bold text-blue-600 mb-3"></h3>
+                                <div class="overflow-x-auto max-h-[400px] rounded-lg border border-gray-200">
+                                    <table class="w-full text-sm text-left text-gray-500">
+                                        <thead class="text-xs text-gray-700 uppercase bg-pink-100 sticky top-0">
+                                            <tr><th class="px-6 py-3">Mã HS</th><th class="px-6 py-3">Họ Tên</th><th class="px-6 py-3">Thao tác</th></tr>
+                                        </thead>
+                                        <tbody id="student-table-body" class="bg-white"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB: Tracking (Shared logic) -->
+                        <div id="tab-tracking" class="teacher-tab hidden">
+                            <h2 class="text-2xl font-bold text-blue-600 mb-6 border-b-2 border-blue-200 pb-2">Nhập Điểm & Đánh Giá</h2>
+                            <div class="flex flex-wrap gap-4 mb-6">
+                                <select id="tracking-class-select" onchange="renderTrackingTable()" class="p-2 border rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+                                    <option value="">-- Chọn Lớp --</option>
+                                    <option value="6A1">Lớp 6A1</option>
+                                    <option value="6A2">Lớp 6A2</option>
+                                    <option value="6A3">Lớp 6A3</option>
+                                    <option value="6A4">Lớp 6A4</option>
+                                    <option value="6A5">Lớp 6A5</option>
+                                </select>
+                                <select id="tracking-lesson-select" onchange="renderTrackingTable()" class="p-2 border rounded-lg bg-white shadow-sm flex-grow focus:outline-none focus:ring-2 focus:ring-blue-300"></select>
+                            </div>
+                            <div class="overflow-x-auto max-h-[400px] border rounded-lg bg-white">
+                                <table class="w-full text-sm text-left text-gray-600">
+                                    <thead class="text-xs text-gray-700 uppercase bg-blue-100 sticky top-0">
+                                        <tr>
+                                            <th class="px-4 py-3">Mã HS</th>
+                                            <th class="px-4 py-3">Họ Tên</th>
+                                            <th class="px-2 py-3 text-center">CN</th>
+                                            <th class="px-2 py-3 text-center">Nhóm</th>
+                                            <th class="px-4 py-3 text-center">Xếp Loại</th>
+                                            <th class="px-4 py-3">Nhận xét</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tracking-table-body">
+                                        <tr><td colspan="6" class="text-center py-4">Vui lòng chọn lớp và bài học</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-4 text-right">
+                                <button onclick="saveTrackingData()" class="btn-3d bg-blue-500 text-white font-bold py-2 px-6 rounded-lg border-b-4 border-blue-700"><i class="fas fa-save mr-2"></i> Lưu Kết Quả</button>
+                            </div>
+                        </div>
+
+                        <!-- TAB: Notifications -->
+                        <div id="tab-notify" class="teacher-tab hidden">
+                            <h2 class="text-2xl font-bold text-yellow-600 mb-6 border-b-2 border-yellow-200 pb-2">Gửi Thông Báo</h2>
+                            <div class="space-y-4 max-w-2xl mx-auto">
+                                <select class="w-full p-3 border rounded-lg bg-white">
+                                    <option value="all">Gửi tất cả các lớp</option>
+                                    <option value="6A1">Lớp 6A1</option>
+                                    <!-- other classes -->
+                                </select>
+                                <input type="text" placeholder="Tiêu đề thông báo" class="w-full p-3 border rounded-lg">
+                                <textarea rows="5" placeholder="Nội dung thông báo..." class="w-full p-3 border rounded-lg"></textarea>
+                                <button onclick="alert('Đã gửi thông báo thành công!')" class="w-full btn-3d bg-yellow-400 text-white font-bold py-3 rounded-xl border-b-4 border-yellow-600">Gửi Thông Báo</button>
+                            </div>
+                        </div>
+
+                        <!-- TAB: Statistics -->
+                        <div id="tab-stats" class="teacher-tab hidden">
+                            <h2 class="text-2xl font-bold text-green-600 mb-6 border-b-2 border-green-200 pb-2">Thống Kê Tổng Hợp</h2>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <!-- Thống kê toàn khối -->
+                                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                                    <h4 class="text-center font-bold text-gray-600 mb-4 text-lg">So sánh TB Học Kì toàn khối</h4>
+                                    <canvas id="allClassesChart" height="200"></canvas>
+                                </div>
+                                <!-- Thống kê chi tiết lớp -->
+                                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h4 class="font-bold text-gray-600 text-lg">Chi tiết theo lớp</h4>
+                                        <select id="stat-detail-class" class="border rounded p-1 text-sm" onchange="renderClassDetailChart()">
+                                            <option value="6A1">6A1</option>
+                                            <option value="6A2">6A2</option>
+                                            <option value="6A3">6A3</option>
+                                            <option value="6A4">6A4</option>
+                                            <option value="6A5">6A5</option>
+                                        </select>
+                                    </div>
+                                    <canvas id="classDetailChart" height="200"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-4 rounded-xl border border-green-200 flex items-start gap-4">
+                                <div class="text-3xl text-green-500"><i class="fas fa-lightbulb"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-green-800 mb-1">Lời khuyên cho Giáo viên:</h4>
+                                    <p class="text-green-700 italic" id="teacher-advice">Đang phân tích dữ liệu...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3b. LEADER DASHBOARD -->
+        <section id="leader-dashboard" class="hidden-section">
+            <div class="glass-panel p-6 max-w-5xl mx-auto bg-white/70">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-green-700"><i class="fas fa-user-edit mr-2"></i> Khu Vực Nhóm Trưởng</h2>
+                    <button onclick="switchView('home-view')" class="text-red-500 font-bold hover:underline">Đăng xuất</button>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-green-100">
+                    <p class="mb-4 text-gray-600 italic"><i class="fas fa-info-circle"></i> Nhóm trưởng chọn lớp và nhập điểm, nhận xét cho các bạn. Hãy làm việc công tâm nhé!</p>
+                    <!-- Reuse Tracking Interface Structure -->
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <select id="leader-class-select" onchange="renderLeaderTracking()" class="p-2 border rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-green-300">
+                            <option value="">-- Chọn Lớp --</option>
+                            <option value="6A1">Lớp 6A1</option>
+                            <option value="6A2">Lớp 6A2</option>
+                            <option value="6A3">Lớp 6A3</option>
+                            <option value="6A4">Lớp 6A4</option>
+                            <option value="6A5">Lớp 6A5</option>
+                        </select>
+                        <select id="leader-lesson-select" onchange="renderLeaderTracking()" class="p-2 border rounded-lg bg-white shadow-sm flex-grow focus:outline-none focus:ring-2 focus:ring-green-300"></select>
+                    </div>
+                    <div class="overflow-x-auto max-h-[500px] border rounded-lg bg-white">
+                        <table class="w-full text-sm text-left text-gray-600">
+                            <thead class="text-xs text-gray-700 uppercase bg-green-100 sticky top-0">
+                                <tr>
+                                    <th class="px-4 py-3">Mã HS</th>
+                                    <th class="px-4 py-3">Họ Tên</th>
+                                    <th class="px-2 py-3 text-center">CN</th>
+                                    <th class="px-2 py-3 text-center">Nhóm</th>
+                                    <th class="px-4 py-3 text-center">Xếp Loại</th>
+                                    <th class="px-4 py-3">Nhận xét</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leader-table-body">
+                                <tr><td colspan="6" class="text-center py-4">Vui lòng chọn lớp và bài học</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 text-right">
+                        <button onclick="saveLeaderData()" class="btn-3d bg-green-500 text-white font-bold py-2 px-6 rounded-lg border-b-4 border-green-700"><i class="fas fa-check mr-2"></i> Hoàn thành nhập điểm</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. STUDENT LOGIN -->
+        <section id="student-login" class="hidden-section max-w-md mx-auto mt-10">
+            <div class="glass-panel p-8 text-center relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-100 rounded-full opacity-50 blur-xl"></div>
+                <div class="w-20 h-20 bg-yellow-100 rounded-full mx-auto flex items-center justify-center mb-4 text-3xl text-yellow-500 shadow-md">
+                    <i class="fas fa-smile-wink"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-700 mb-2">Học Sinh Xem Điểm</h2>
+                <p class="text-sm text-gray-500 mb-6">Nhập mã học sinh (VD: HS001)</p>
+                <input type="text" id="student-id-input" placeholder="Mã HS..." class="w-full p-3 rounded-lg border-2 border-yellow-200 mb-4 focus:outline-none focus:border-yellow-400 uppercase bg-white/70">
+                <button onclick="loginStudent()" class="w-full btn-3d bg-yellow-300 text-yellow-900 font-bold py-3 rounded-xl border-b-4 border-yellow-400">
+                    Xem Kết Quả
+                </button>
+            </div>
+        </section>
+
+        <!-- 5. STUDENT DASHBOARD -->
+        <section id="student-dashboard" class="hidden-section">
+            <div class="glass-panel p-6 max-w-6xl mx-auto bg-white/70">
+                <!-- Student Header -->
+                <div class="flex flex-col md:flex-row items-center gap-6 mb-8 bg-gradient-to-r from-pink-100 to-blue-100 p-6 rounded-2xl shadow-sm border border-white">
+                    <div class="relative group cursor-pointer student-card-deco">
+                        <div class="w-24 h-24 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
+                            <img id="student-avatar" src="" alt="Avatar" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="text-center md:text-left flex-grow">
+                        <h2 class="text-4xl font-bold mb-1 student-name-fancy" id="st-name">Tên Học Sinh</h2>
+                        <div class="mt-2">
+                            <span class="inline-block bg-white px-3 py-1 rounded-full text-sm text-pink-500 font-bold shadow-sm" id="st-class">Lớp 6A...</span>
+                        </div>
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-xl text-center shadow-sm">
+                        <p class="text-xs text-gray-500 uppercase font-bold">TB Chung</p>
+                        <p class="text-2xl font-bold text-blue-600" id="st-gpa">--</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 space-y-6">
+                        <!-- Filters for semester -->
+                        <div class="flex gap-4 mb-2">
+                            <button onclick="filterSemester(1)" class="px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-bold hover:bg-blue-200">Học kì 1</button>
+                            <button onclick="filterSemester(2)" class="px-4 py-2 rounded-lg bg-pink-100 text-pink-700 font-bold hover:bg-pink-200">Học kì 2</button>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-blue-50">
+                            <h3 class="font-bold text-lg text-blue-600 mb-4 flex items-center"><i class="fas fa-chart-line mr-2"></i> Biểu đồ tiến bộ</h3>
+                            <canvas id="studentProgressChart" height="150"></canvas>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-pink-50">
+                            <h3 class="font-bold text-lg text-pink-600 mb-4 flex items-center"><i class="fas fa-list-alt mr-2"></i> Chi tiết kết quả</h3>
+                            <div class="overflow-x-auto rounded-xl border border-gray-100">
+                                <table class="w-full text-sm">
+                                    <thead class="bg-pink-50 text-gray-700 font-bold text-xs uppercase">
+                                        <tr>
+                                            <th class="p-3 text-left">Bài Học</th>
+                                            <th class="p-3 text-center">Điểm CN</th>
+                                            <th class="p-3 text-center">Điểm Nhóm</th>
+                                            <th class="p-3 text-center bg-pink-100">TB</th>
+                                            <th class="p-3 text-center">Xếp Loại</th>
+                                            <th class="p-3 text-left">Nhận xét</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 text-gray-600" id="st-results-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sidebar Column (Reminder, Upload, Chat) - Kept same as V2 -->
+                    <div class="space-y-6">
+                        <div class="bg-yellow-50 p-5 rounded-2xl border border-yellow-100 shadow-sm relative overflow-hidden group hover:scale-[1.02] transition">
+                            <h3 class="font-bold text-lg text-yellow-700 mb-2 relative z-10"><i class="fas fa-bell mr-1"></i> Lời nhắc</h3>
+                            <p class="text-sm text-gray-700 bg-white/60 p-3 rounded-lg relative z-10">"Các em nhớ chuẩn bị bài mới nhé!"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="marquee-footer">
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+            <span class="mx-10"><i class="fas fa-heart text-white"></i> Bản quyền thuộc về cô Nguyễn Thị Ngân Hà – trường THCS Đinh Lạc, xã Bảo Thuận</span>
+            <span class="mx-10"><i class="fas fa-rocket text-blue-200"></i> Công nghệ 6 - Chân trời sáng tạo</span>
+        </marquee>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+        const lessonList = [
+            "HK1 - Bài 1. Nhà ở đối với con người", "HK1 - Bài 2. Sử dụng năng lượng trong gia đình", "HK1 - Bài 3. Ngôi nhà thông minh",
+            "HK1 - Dự án 1: Ngôi nhà của em", "HK1 - Bài 4. Thực phẩm và dinh dưỡng", "HK1 - Bài 5. Bảo quản và chế biến thực phẩm",
+            "HK2 - Dự án 2. Món ăn cho bữa cơm gia đình", "HK2 - Bài 6. Các loại vải thường dùng", "HK2 - Bài 7. Trang phục",
+            "HK2 - Bài 8. Thời trang", "HK2 - Dự án 3: Em làm nhà thiết kế", "HK2 - Bài 9. Sử dụng đồ dùng điện",
+            "HK2 - Bài 10. An toàn điện", "HK2 - Dự án 4: Tiết kiệm điện"
+        ];
+
+        // Combine CSV Data (Parsed from your files)
+        const students = [
+            // 6A1
+            {id:"HS001",name:"Lương Ngọc Ánh",class:"6A1"},{id:"HS002",name:"Võ Trần Bảo Ân",class:"6A1"},{id:"HS003",name:"K' Brích",class:"6A1"},{id:"HS004",name:"K' Gia Cơ",class:"6A1"},{id:"HS005",name:"K' Dương",class:"6A1"},{id:"HS006",name:"Lê Trọng Đạt",class:"6A1"},{id:"HS007",name:"Ka Hịu",class:"6A1"},{id:"HS008",name:"Ka Su Hoà",class:"6A1"},{id:"HS009",name:"Cao Ngọc Gia Huệ",class:"6A1"},{id:"HS010",name:"Đinh Tuấn Hưng",class:"6A1"},{id:"HS011",name:"Ka Hứs",class:"6A1"},{id:"HS012",name:"Huỳnh Quốc Khang",class:"6A1"},{id:"HS013",name:"Nguyễn Vĩnh Khang",class:"6A1"},{id:"HS014",name:"Ka Luyến",class:"6A1"},{id:"HS015",name:"Ka Su Ly",class:"6A1"},{id:"HS016",name:"Ka Ra Mul Mị",class:"6A1"},{id:"HS017",name:"Ka Nghiên",class:"6A1"},{id:"HS018",name:"Thái Thiện Nhân",class:"6A1"},{id:"HS019",name:"Lê Quang Nhật",class:"6A1"},{id:"HS020",name:"Lê Quỳnh Nhi",class:"6A1"},{id:"HS021",name:"Nguyễn Hương Nhi",class:"6A1"},{id:"HS022",name:"Ka Nhuyền",class:"6A1"},{id:"HS023",name:"Lê Hoàng Phú",class:"6A1"},{id:"HS024",name:"Nguyễn Minh Phúc",class:"6A1"},{id:"HS025",name:"Nguyễn Thiện Phước",class:"6A1"},{id:"HS026",name:"Trần Đại Quý",class:"6A1"},{id:"HS027",name:"Dương Thế Sang",class:"6A1"},{id:"HS028",name:"Mo Lom Subin",class:"6A1"},{id:"HS029",name:"K' Sứs",class:"6A1"},{id:"HS030",name:"Phạm Hoàng Tâm",class:"6A1"},{id:"HS031",name:"Ka Mỹ Thanh",class:"6A1"},{id:"HS032",name:"Ka My Theryn",class:"6A1"},{id:"HS033",name:"Dương Thị Ngọc Thúy",class:"6A1"},{id:"HS034",name:"Ka Thuýt",class:"6A1"},{id:"HS035",name:"Từ Nguyễn Yến Thư",class:"6A1"},{id:"HS036",name:"K' Thành Tín",class:"6A1"},{id:"HS037",name:"Huỳnh Thanh Trúc",class:"6A1"},{id:"HS038",name:"K' Trường",class:"6A1"},{id:"HS039",name:"Phạm Văn Tú",class:"6A1"},{id:"HS040",name:"Võ Cát Tường",class:"6A1"},{id:"HS041",name:"K' Yìm",class:"6A1"},
+            // 6A2
+            {id:"HS042",name:"Nguyễn Hoàng Kim Anh",class:"6A2"},{id:"HS043",name:"Nguyễn Thùy Minh Anh",class:"6A2"},{id:"HS044",name:"Phạm Trần Gia Bảo",class:"6A2"},{id:"HS045",name:"Trần Bùi Gia Bảo",class:"6A2"},{id:"HS046",name:"Trần Gia Bảo",class:"6A2"},{id:"HS047",name:"K’ Bưs",class:"6A2"},{id:"HS048",name:"Lã Hoàng Minh Châu",class:"6A2"},{id:"HS049",name:"K' Đương",class:"6A2"},{id:"HS050",name:"Tô Duy Bảo Gia",class:"6A2"},{id:"HS051",name:"Trần Trung Hiếu",class:"6A2"},{id:"HS052",name:"Ka Hợp",class:"6A2"},{id:"HS053",name:"Trương Nhật Huân",class:"6A2"},{id:"HS054",name:"Ka Huấn",class:"6A2"},{id:"HS055",name:"K Đăng Kao Ji",class:"6A2"},{id:"HS056",name:"Nguyễn Duy Khánh",class:"6A2"},{id:"HS057",name:"Ka Huyền Kỳ",class:"6A2"},{id:"HS058",name:"Lê Hoàng Long",class:"6A2"},{id:"HS059",name:"Ka Mỵ",class:"6A2"},{id:"HS060",name:"Ka Linh Nhi",class:"6A2"},{id:"HS061",name:"Triệu Lâm Tâm Như",class:"6A2"},{id:"HS062",name:"Trương Võ Quỳnh Như",class:"6A2"},{id:"HS063",name:"Điểu Thị Ka Oanh",class:"6A2"},{id:"HS064",name:"Triệu Tiến Phi",class:"6A2"},{id:"HS065",name:"Nguyễn Linh Phương",class:"6A2"},{id:"HS066",name:"Phạm Anh Quân",class:"6A2"},{id:"HS067",name:"K' Suy",class:"6A2"},{id:"HS068",name:"K’ Na Than",class:"6A2"},{id:"HS069",name:"Vũ Văn Thành",class:"6A2"},{id:"HS070",name:"Jơ Lơng Ka Thiên",class:"6A2"},{id:"HS071",name:"Thái Chí Thiện",class:"6A2"},{id:"HS072",name:"Ka Thuở",class:"6A2"},{id:"HS073",name:"Vũ Thị Anh Thuyên",class:"6A2"},{id:"HS074",name:"Ka Thưn",class:"6A2"},{id:"HS075",name:"Ka Thưn",class:"6A2"},{id:"HS076",name:"Ka Ngọc Tiên",class:"6A2"},{id:"HS077",name:"Nguyễn Ngọc Hoàng Trường",class:"6A2"},{id:"HS078",name:"Trương Anh Tuấn",class:"6A2"},{id:"HS079",name:"K' Tuỳs",class:"6A2"},{id:"HS080",name:"K’ Duy Tường",class:"6A2"},{id:"HS081",name:"Nguyễn Bùi Khánh Vân",class:"6A2"},{id:"HS082",name:"Nguyễn Ngọc Khánh Vy",class:"6A2"},
+            // 6A3
+            {id:"HS083",name:"Phạm Hoài An",class:"6A3"},{id:"HS084",name:"Đoàn Phạm Quỳnh Anh",class:"6A3"},{id:"HS085",name:"Ka Rin Ân",class:"6A3"},{id:"HS086",name:"K' Bruyn",class:"6A3"},{id:"HS087",name:"Phạm Việt Cường",class:"6A3"},{id:"HS088",name:"Nguyễn Minh Duy",class:"6A3"},{id:"HS089",name:"K’ Đoàn",class:"6A3"},{id:"HS090",name:"Huỳnh Minh Đức",class:"6A3"},{id:"HS091",name:"Ka Hà",class:"6A3"},{id:"HS092",name:"Phạm Quang Huy",class:"6A3"},{id:"HS093",name:"Ka Ngọc Huyền",class:"6A3"},{id:"HS094",name:"Bùi Khánh Hưng",class:"6A3"},{id:"HS095",name:"K' Anh Khang",class:"6A3"},{id:"HS096",name:"Poui Đăng Khoa",class:"6A3"},{id:"HS097",name:"Nguyễn Hoàng Đăng Khôi",class:"6A3"},{id:"HS098",name:"Ka Lan",class:"6A3"},{id:"HS099",name:"Ka Su Lin",class:"6A3"},{id:"HS100",name:"Nguyễn Hoàng Hà Linh",class:"6A3"},{id:"HS101",name:"K' Lực",class:"6A3"},{id:"HS102",name:"Trịnh Tiến Hoa Ly",class:"6A3"},{id:"HS103",name:"Hà Đình Thiên Minh",class:"6A3"},{id:"HS104",name:"Huỳnh Khởi Nguyên",class:"6A3"},{id:"HS105",name:"Trần Thành Nhân",class:"6A3"},{id:"HS106",name:"Ka Nhi",class:"6A3"},{id:"HS107",name:"Đỗ Thiên Phúc",class:"6A3"},{id:"HS108",name:"Nguyễn Lê Hồng Phúc",class:"6A3"},{id:"HS109",name:"Nguyễn Lê Huy Phúc",class:"6A3"},{id:"HS110",name:"Võ Minh Quang",class:"6A3"},{id:"HS111",name:"Mai Lê Bảo Quyên",class:"6A3"},{id:"HS112",name:"Hoàng Nhật Quỳnh",class:"6A3"},{id:"HS113",name:"Ka E Ry",class:"6A3"},{id:"HS114",name:"K' Suyn",class:"6A3"},{id:"HS115",name:"Ka Thánh",class:"6A3"},{id:"HS116",name:"K’ Minh Y Thiện",class:"6A3"},{id:"HS117",name:"Lê Quang Hữu Thịnh",class:"6A3"},{id:"HS118",name:"Ka Thuỳ",class:"6A3"},{id:"HS119",name:"Ka Thứs",class:"6A3"},{id:"HS120",name:"Lê Thị Bảo Trâm",class:"6A3"},{id:"HS121",name:"Nguyễn Anh Tú",class:"6A3"},{id:"HS122",name:"Nguyễn Ngọc Mỹ Uyên",class:"6A3"},{id:"HS123",name:"Lê Tuấn Vũ",class:"6A3"},
+            // 6A4
+            {id:"HS124",name:"Phạm Lê Hoài An",class:"6A4"},{id:"HS125",name:"Lê Trần Xuân Anh",class:"6A4"},{id:"HS126",name:"Nguyễn Viết Hoàng Anh",class:"6A4"},{id:"HS127",name:"Ka Bích",class:"6A4"},{id:"HS128",name:"K’ Brun",class:"6A4"},{id:"HS129",name:"K' Bửs",class:"6A4"},{id:"HS130",name:"Nguyễn Minh Dũng",class:"6A4"},{id:"HS131",name:"K' Duy",class:"6A4"},{id:"HS132",name:"Nguyễn Ngọc Thùy Dương",class:"6A4"},{id:"HS133",name:"Nguyễn Đức Đạt",class:"6A4"},{id:"HS134",name:"Lê Anh Gíap",class:"6A4"},{id:"HS135",name:"Ka Hân",class:"6A4"},{id:"HS136",name:"Ka Kim Hoe",class:"6A4"},{id:"HS137",name:"Ka Huỳnh",class:"6A4"},{id:"HS138",name:"Trần Vũ Thiên Hương",class:"6A4"},{id:"HS139",name:"Trần Hoàng Duy Khang",class:"6A4"},{id:"HS140",name:"K' Khôi",class:"6A4"},{id:"HS141",name:"Võ Hoàng Anh Kiệt",class:"6A4"},{id:"HS142",name:"Ka Thuỵ Linh",class:"6A4"},{id:"HS143",name:"Nguyễn Lê Thảo Ly",class:"6A4"},{id:"HS144",name:"Nguyễn Lâm Hà My",class:"6A4"},{id:"HS145",name:"Ka Nhung",class:"6A4"},{id:"HS146",name:"K' Ninh",class:"6A4"},{id:"HS147",name:"Nguyễn Thiên Phước",class:"6A4"},{id:"HS148",name:"Triệu Phú Quý",class:"6A4"},{id:"HS149",name:"Nguyễn Trần Kim Sa",class:"6A4"},{id:"HS150",name:"Nguyễn Khải Tâm",class:"6A4"},{id:"HS151",name:"Trần Trịnh Thắng",class:"6A4"},{id:"HS152",name:"Ka Thập",class:"6A4"},{id:"HS153",name:"K' Brưn Thịnh",class:"6A4"},{id:"HS154",name:"Ka Hoài Thơ",class:"6A4"},{id:"HS155",name:"Ka Thừn",class:"6A4"},{id:"HS156",name:"Ka Thừn",class:"6A4"},{id:"HS157",name:"K' Hưởng Thanh Tiền",class:"6A4"},{id:"HS158",name:"Trương Ngọc Quỳnh Trâm",class:"6A4"},{id:"HS159",name:"Trần Nguyễn Bảo Trân",class:"6A4"},{id:"HS160",name:"Nguyễn Đức Tuấn",class:"6A4"},{id:"HS161",name:"K' Tỷ",class:"6A4"},{id:"HS162",name:"K' Uy",class:"6A4"},
+            // 6A5
+            {id:"HS163",name:"Nguyễn Thị Hồng Anh",class:"6A5"},{id:"HS164",name:"Nguyễn Thị Vân Anh",class:"6A5"},{id:"HS165",name:"K' Byiễn",class:"6A5"},{id:"HS166",name:"K' Byiu",class:"6A5"},{id:"HS167",name:"Nguyễn Trương Á Châu",class:"6A5"},{id:"HS168",name:"Nguyễn Tiến Đạt",class:"6A5"},{id:"HS169",name:"Ka Hạnh",class:"6A5"},{id:"HS170",name:"Nguyễn Hữu Hạnh",class:"6A5"},{id:"HS171",name:"Ka Hi",class:"6A5"},{id:"HS172",name:"Ka Hum",class:"6A5"},{id:"HS173",name:"Lê Thị Thanh Huyền",class:"6A5"},{id:"HS174",name:"Nguyễn Đặng Tấn Hưng",class:"6A5"},{id:"HS175",name:"Ka Su Ji",class:"6A5"},{id:"HS176",name:"Đặng Quốc Khang",class:"6A5"},{id:"HS177",name:"Nguyễn Ngọc Bảo Khánh",class:"6A5"},{id:"HS178",name:"Vũ Hữu Minh Khoa",class:"6A5"},{id:"HS179",name:"Lê Võ Bảo Kim",class:"6A5"},{id:"HS180",name:"Ka' Thùy Linh",class:"6A5"},{id:"HS181",name:"Ka Luỳn",class:"6A5"},{id:"HS182",name:"Nguyễn Hoàng Hải Minh",class:"6A5"},{id:"HS183",name:"Phạm Thanh Ngân",class:"6A5"},{id:"HS184",name:"Nguyễn Giáng Ngọc",class:"6A5"},{id:"HS185",name:"Bốc Sồi Minh Nhân",class:"6A5"},{id:"HS186",name:"Phạm Thanh Nhiên",class:"6A5"},{id:"HS187",name:"K' Nhuân",class:"6A5"},{id:"HS188",name:"K’ Gia Phong",class:"6A5"},{id:"HS189",name:"K' Phúc",class:"6A5"},{id:"HS190",name:"Ka My Phú Suỳn",class:"6A5"},{id:"HS191",name:"Đoàn Ngọc Thạch",class:"6A5"},{id:"HS192",name:"Ka Thấu",class:"6A5"},{id:"HS193",name:"Ka Thúys",class:"6A5"},{id:"HS194",name:"Ka Rơ Yam Thư",class:"6A5"},{id:"HS195",name:"Nguyễn Phạm Xuân Thư",class:"6A5"},{id:"HS196",name:"Phan Trần Minh Thư",class:"6A5"},{id:"HS197",name:"Đỗ Đăng Tiến",class:"6A5"},{id:"HS198",name:"K' Bruy Tilis",class:"6A5"},{id:"HS199",name:"Hoàng Thùy Quỳnh Trang",class:"6A5"},{id:"HS200",name:"Nguyễn Thị Ngọc Trâm",class:"6A5"},{id:"HS201",name:"K' Vĩnh",class:"6A5"},{id:"HS202",name:"K' Xuyên",class:"6A5"}
+        ];
+
+        // Global Data Store
+        let globalGrades = {}; 
+
+        // --- 1. GENERATE DEMO DATA (LOGIC: 6A5 > 6A1,6A4 > 6A2,6A3) ---
+        function generateDemoData() {
+            const hk1Lessons = lessonList.slice(0, 6); // First 6 lessons are HK1
+            
+            students.forEach(s => {
+                globalGrades[s.id] = [];
+                hk1Lessons.forEach(lesson => {
+                    let min, max;
+                    
+                    // Logic điểm số theo lớp
+                    if (s.class === '6A5') { min = 9; max = 10; } // Trội nhất
+                    else if (s.class === '6A1' || s.class === '6A4') { min = 7; max = 9; } // Cao
+                    else { min = 5; max = 8; } // Trung bình
+
+                    // ĐIỂM NGUYÊN (Integer)
+                    const scoreInd = Math.floor(Math.random() * (max - min + 1)) + min;
+                    const scoreGrp = Math.floor(Math.random() * (max - min + 1)) + min;
+                    const avg = ((scoreInd + scoreGrp) / 2).toFixed(1);
+                    
+                    let rank = "Đạt";
+                    if (avg >= 8.0) rank = "Tốt";
+                    else if (avg >= 6.5) rank = "Khá";
+                    else if (avg < 5.0) rank = "CĐ";
+
+                    globalGrades[s.id].push({
+                        lesson: lesson,
+                        scoreInd: scoreInd,
+                        scoreGrp: scoreGrp,
+                        avg: avg,
+                        rank: rank,
+                        comment: rank === "Tốt" ? "Làm bài rất tốt!" : (rank === "Khá" ? "Cần cố gắng hơn." : "Cần xem lại kiến thức.")
+                    });
+                });
+            });
+            console.log("Demo Data Generated for HK1", globalGrades);
+        }
+        
+        // Run once on load
+        generateDemoData();
+
+        // --- NAVIGATION ---
+        function switchView(viewId) {
+            document.querySelectorAll('section').forEach(el => el.classList.add('hidden-section'));
+            const target = document.getElementById(viewId);
+            if(target) target.classList.remove('hidden-section');
+            if(viewId === 'home-view') document.getElementById('home-view').scrollIntoView({behavior:"smooth"});
+        }
+
+        // --- SHARED RENDER LOGIC (Used by Teacher & Leader) ---
+        function renderTrackingRow(student, data, isLeader = false) {
+            const scoreInd = data ? data.scoreInd : '';
+            const scoreGrp = data ? data.scoreGrp : '';
+            const rank = data ? data.rank : '';
+            const comment = data ? data.comment : '';
+            const readonly = isLeader ? "" : ""; // Leader can edit too
+
+            return `
+                <tr class="bg-white border-b hover:bg-gray-50" data-id="${student.id}">
+                    <td class="px-4 py-3 font-medium text-gray-900">${student.id}</td>
+                    <td class="px-4 py-3">${student.name}</td>
+                    <td class="px-2 py-3"><input type="number" min="0" max="10" value="${scoreInd}" class="w-full p-1 border rounded text-center input-ind" placeholder="-"></td>
+                    <td class="px-2 py-3"><input type="number" min="0" max="10" value="${scoreGrp}" class="w-full p-1 border rounded text-center input-grp" placeholder="-"></td>
+                    <td class="px-4 py-3">
+                        <select class="w-full p-1 border rounded text-sm input-rank">
+                            <option value="">--</option>
+                            <option value="Tốt" ${rank === 'Tốt' ? 'selected' : ''}>Tốt</option>
+                            <option value="Khá" ${rank === 'Khá' ? 'selected' : ''}>Khá</option>
+                            <option value="Đạt" ${rank === 'Đạt' ? 'selected' : ''}>Đạt</option>
+                            <option value="CĐ" ${rank === 'CĐ' ? 'selected' : ''}>CĐ</option>
+                        </select>
+                    </td>
+                    <td class="px-4 py-3"><input type="text" value="${comment}" class="w-full p-1 border rounded text-sm input-comment" placeholder="Nhận xét..."></td>
+                </tr>
+            `;
+        }
+
+        function collectAndSaveData(tableBodyId, lessonSelectId) {
+            const lesson = document.getElementById(lessonSelectId).value;
+            if(!lesson) { alert("Vui lòng chọn bài học"); return; }
+            
+            const rows = document.querySelectorAll(`#${tableBodyId} tr`);
+            rows.forEach(row => {
+                const sId = row.getAttribute('data-id');
+                const ind = row.querySelector('.input-ind').value;
+                const grp = row.querySelector('.input-grp').value;
+                const cmt = row.querySelector('.input-comment').value;
+                let rank = row.querySelector('.input-rank').value;
+
+                if (ind && grp) {
+                    const avg = ((parseFloat(ind) + parseFloat(grp))/2).toFixed(1);
+                    if(!rank) { // Auto rank if not set
+                        if(avg >= 8) rank = "Tốt"; else if(avg >= 6.5) rank = "Khá"; else rank = "Đạt";
+                    }
+                    
+                    if(!globalGrades[sId]) globalGrades[sId] = [];
+                    // Remove old record for this lesson
+                    globalGrades[sId] = globalGrades[sId].filter(r => r.lesson !== lesson);
+                    // Add new
+                    globalGrades[sId].push({
+                        lesson: lesson, scoreInd: ind, scoreGrp: grp, avg: avg, rank: rank, comment: cmt
+                    });
+                }
+            });
+            alert("Đã lưu dữ liệu thành công!");
+        }
+
+        // --- TEACHER FUNCTIONS ---
+        function loginTeacher() {
+            if(document.getElementById('teacher-password').value === '123456') {
+                switchView('teacher-dashboard');
+                showTeacherTab('classes');
+                renderClassCards();
+                document.getElementById('teacher-password').value = '';
+            } else alert('Sai mật khẩu!');
+        }
+
+        function showTeacherTab(tab) {
+            document.querySelectorAll('.teacher-tab').forEach(t => t.classList.add('hidden'));
+            document.getElementById('tab-'+tab).classList.remove('hidden');
+            if(tab === 'tracking') populateSelect('tracking-lesson-select');
+            if(tab === 'stats') renderTeacherStats();
+        }
+
+        function populateSelect(id) {
+            const sel = document.getElementById(id);
+            if(sel.options.length > 0) return;
+            lessonList.forEach(l => {
+                const opt = document.createElement('option');
+                opt.value = l; opt.innerText = l;
+                sel.appendChild(opt);
+            });
+        }
+
+        function renderTrackingTable() {
+            const cls = document.getElementById('tracking-class-select').value;
+            const lsn = document.getElementById('tracking-lesson-select').value;
+            const tbody = document.getElementById('tracking-table-body');
+            tbody.innerHTML = '';
+            if(!cls) return;
+
+            students.filter(s => s.class === cls).forEach(s => {
+                const data = globalGrades[s.id]?.find(r => r.lesson === lsn);
+                tbody.innerHTML += renderTrackingRow(s, data, false);
+            });
+        }
+
+        function saveTrackingData() { collectAndSaveData('tracking-table-body', 'tracking-lesson-select'); }
+
+        // --- CLASS MANAGEMENT ---
+        function renderClassCards() {
+            const grid = document.getElementById('class-grid');
+            grid.innerHTML = '';
+            ['6A1','6A2','6A3','6A4','6A5'].forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = "btn-3d bg-pink-200 text-pink-700 font-bold py-8 rounded-2xl shadow-sm text-2xl hover:bg-pink-300";
+                btn.innerText = c;
+                btn.onclick = () => {
+                    document.getElementById('class-grid').classList.add('hidden');
+                    document.getElementById('student-list-container').classList.remove('hidden');
+                    document.getElementById('current-class-title').innerText = "Danh sách " + c;
+                    const tb = document.getElementById('student-table-body');
+                    tb.innerHTML = '';
+                    students.filter(s=>s.class===c).forEach(s => {
+                        tb.innerHTML += `<tr class='border-b'><td class='p-3'>${s.id}</td><td class='p-3'>${s.name}</td><td class='p-3 text-red-500 cursor-pointer'>Xoá</td></tr>`;
+                    });
+                };
+                grid.appendChild(btn);
+            });
+        }
+        function closeStudentList() {
+            document.getElementById('student-list-container').classList.add('hidden');
+            document.getElementById('class-grid').classList.remove('hidden');
+        }
+
+        // --- STATS LOGIC (UPDATED: All Classes Comparison & Details) ---
+        let statsChart = null;
+        let classDetailChart = null;
+
+        function renderTeacherStats() {
+            renderAllClassesChart();
+            renderClassDetailChart();
+        }
+
+        function renderAllClassesChart() {
+            const ctx = document.getElementById('allClassesChart').getContext('2d');
+            if(statsChart) statsChart.destroy();
+
+            // Calculate averages per class
+            const classAvgs = [];
+            const classes = ['6A1','6A2','6A3','6A4','6A5'];
+            
+            classes.forEach(cls => {
+                const clsStudents = students.filter(s => s.class === cls);
+                let totalScore = 0;
+                let count = 0;
+                
+                clsStudents.forEach(s => {
+                    const grades = globalGrades[s.id] || [];
+                    grades.forEach(g => {
+                        totalScore += parseFloat(g.avg);
+                        count++;
+                    });
+                });
+                
+                classAvgs.push(count > 0 ? (totalScore / count).toFixed(2) : 0);
+            });
+
+            // Logic check for advice
+            const adviceEl = document.getElementById('teacher-advice');
+            const avg6A5 = parseFloat(classAvgs[4]);
+            
+            let advice = "Các lớp 6A1, 6A4 và đặc biệt là 6A5 đang có phong độ rất tốt, cần duy trì. Lớp 6A2 và 6A3 cần có biện pháp bồi dưỡng thêm để nâng cao mặt bằng chung.";
+            if(avg6A5 > 9.0) advice += " Lớp 6A5 thực sự xuất sắc!";
+
+            adviceEl.innerText = advice;
+
+            statsChart = new Chart(ctx, {
+                type: 'pie', // Changed to Pie for diversity
+                data: {
+                    labels: classes,
+                    datasets: [{
+                        label: 'Điểm TB Học Kì 1',
+                        data: classAvgs,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)', // 6A1
+                            'rgba(54, 162, 235, 0.6)', // 6A2
+                            'rgba(255, 206, 86, 0.6)', // 6A3
+                            'rgba(75, 192, 192, 0.6)', // 6A4
+                            'rgba(153, 102, 255, 0.8)' // 6A5 (High)
+                        ],
+                        borderColor: 'white',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'right' }
+                    }
+                }
+            });
+        }
+
+        function renderClassDetailChart() {
+            const clsName = document.getElementById('stat-detail-class').value;
+            const ctx = document.getElementById('classDetailChart').getContext('2d');
+            if(classDetailChart) classDetailChart.destroy();
+
+            // Calculate grade distribution for the selected class
+            let counts = { 'Tốt': 0, 'Khá': 0, 'Đạt': 0, 'CĐ': 0 };
+            const clsStudents = students.filter(s => s.class === clsName);
+            
+            clsStudents.forEach(s => {
+                const grades = globalGrades[s.id] || [];
+                grades.forEach(g => {
+                    if (counts[g.rank] !== undefined) counts[g.rank]++;
+                });
+            });
+
+            classDetailChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Tốt', 'Khá', 'Đạt', 'CĐ'],
+                    datasets: [{
+                        label: `Phân phối xếp loại lớp ${clsName}`,
+                        data: [counts['Tốt'], counts['Khá'], counts['Đạt'], counts['CĐ']],
+                        backgroundColor: [
+                            '#4ade80', // Green
+                            '#60a5fa', // Blue
+                            '#facc15', // Yellow
+                            '#f87171'  // Red
+                        ],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // --- LEADER FUNCTIONS ---
+        function loginLeader() {
+            if(document.getElementById('leader-password').value === '123456') {
+                switchView('leader-dashboard');
+                populateSelect('leader-lesson-select');
+                document.getElementById('leader-password').value = '';
+            } else alert('Sai mật khẩu!');
+        }
+
+        function renderLeaderTracking() {
+            const cls = document.getElementById('leader-class-select').value;
+            const lsn = document.getElementById('leader-lesson-select').value;
+            const tbody = document.getElementById('leader-table-body');
+            tbody.innerHTML = '';
+            if(!cls) return;
+
+            students.filter(s => s.class === cls).forEach(s => {
+                const data = globalGrades[s.id]?.find(r => r.lesson === lsn);
+                tbody.innerHTML += renderTrackingRow(s, data, true); // isLeader = true
+            });
+        }
+
+        function saveLeaderData() { collectAndSaveData('leader-table-body', 'leader-lesson-select'); }
+
+        // --- STUDENT FUNCTIONS ---
+        let stChart = null;
+        let currentStudentId = null;
+
+        function loginStudent() {
+            const id = document.getElementById('student-id-input').value.trim().toUpperCase();
+            const student = students.find(s => s.id === id);
+            if(student) {
+                currentStudentId = id;
+                switchView('student-dashboard');
+                document.getElementById('st-name').innerText = student.name;
+                document.getElementById('st-class').innerText = "Lớp " + student.class;
+                document.getElementById('student-avatar').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${student.name}`;
+                
+                // Default view HK1
+                filterSemester(1);
+
+            } else alert('Mã HS không tồn tại!');
+        }
+
+        function filterSemester(semester) {
+            const tbody = document.getElementById('st-results-body');
+            tbody.innerHTML = '';
+            const grades = globalGrades[currentStudentId] || [];
+            let labels = [], data = [], sum = 0, count = 0;
+
+            grades.forEach(g => {
+                // Filter logic
+                const isHK1 = g.lesson.startsWith("HK1");
+                const isHK2 = g.lesson.startsWith("HK2");
+                
+                if ((semester === 1 && isHK1) || (semester === 2 && isHK2)) {
+                    let color = g.rank === 'Tốt' ? 'text-green-600 font-bold' : (g.rank === 'Khá' ? 'text-blue-600' : 'text-yellow-600');
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">${g.lesson}</td>
+                            <td class="p-3 text-center">${g.scoreInd}</td>
+                            <td class="p-3 text-center">${g.scoreGrp}</td>
+                            <td class="p-3 text-center font-bold">${g.avg}</td>
+                            <td class="p-3 text-center ${color}">${g.rank}</td>
+                            <td class="p-3 italic text-gray-500 text-xs">${g.comment || ''}</td>
+                        </tr>
+                    `;
+                    // Simplify label name for chart
+                    let shortLabel = g.lesson.replace("HK1 - ", "").replace("HK2 - ", "").split('.')[0];
+                    if (shortLabel.length > 15) shortLabel = shortLabel.substring(0, 15) + "...";
+                    
+                    labels.push(shortLabel);
+                    data.push(g.avg);
+                    sum += parseFloat(g.avg);
+                    count++;
+                }
+            });
+
+            document.getElementById('st-gpa').innerText = count > 0 ? (sum/count).toFixed(1) : "--";
+
+            // Chart
+            const ctx = document.getElementById('studentProgressChart').getContext('2d');
+            if(stChart) stChart.destroy();
+            stChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Tiến trình HK${semester}`,
+                        data: data,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { scales: { y: { min: 0, max: 10 } } }
+            });
+        }
+
+    </script>
+</body>
+</html>
